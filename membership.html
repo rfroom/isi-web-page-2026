@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary SEO Meta Tags -->
+    <title>Membership | ISI Elite Training | Flexible Plans for Every Goal</title>
+    <meta name="title" content="Membership | ISI Elite Training | Flexible Plans for Every Goal">
+    <meta name="description" content="Choose the ISI Elite Training membership that fits your lifestyle. From 4 sessions per week to unlimited VIP access. First session is always FREE!">
+    <meta name="keywords" content="ISI Elite Training membership, gym membership, fitness membership, group training pricing, workout plans">
+    <meta name="author" content="ISI Elite Training">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.isielitetraining.com/membership">
+    <meta property="og:title" content="Membership | ISI Elite Training | Flexible Plans">
+    <meta property="og:description" content="Choose the membership that fits your lifestyle. First session FREE!">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --isi-green: #7ED321;
+            --isi-black: #0a0a0a;
+            --isi-dark: #1a1a1a;
+            --isi-gray: #2a2a2a;
+            --isi-light-gray: #888;
+            --isi-white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--isi-black);
+            color: var(--isi-white);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            color: var(--isi-white);
+        }
+
+        .logo span {
+            color: var(--isi-green);
+        }
+
+        .logo sup {
+            font-size: 0.5em;
+            vertical-align: super;
+            margin-left: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--isi-white);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--isi-green);
+        }
+
+        .nav-cta .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--isi-green);
+            color: var(--isi-black);
+        }
+
+        .btn-primary:hover {
+            background: #8ee635;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--isi-white);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .btn-large {
+            padding: 1.1rem 2.5rem;
+            font-size: 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--isi-black) 0%, var(--isi-dark) 50%, var(--isi-black) 100%);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            letter-spacing: -2px;
+        }
+
+        .hero h1 span {
+            color: var(--isi-green);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--isi-light-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Section Styles */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-eyebrow {
+            color: var(--isi-green);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        /* Intro Offers */
+        .intro-section {
+            padding: 4rem 2rem 6rem;
+            background: var(--isi-dark);
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .intro-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .intro-card {
+            background: var(--isi-gray);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+        }
+
+        .intro-card.featured {
+            border: 2px solid var(--isi-green);
+        }
+
+        .intro-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--isi-green);
+            color: var(--isi-black);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .intro-title {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .intro-subtitle {
+            color: var(--isi-light-gray);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .intro-price {
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--isi-green);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .intro-price-note {
+            color: var(--isi-light-gray);
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+        }
+
+        .intro-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .intro-features li {
+            padding: 0.6rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.95rem;
+        }
+
+        .intro-features li::before {
+            content: '✓';
+            color: var(--isi-green);
+            margin-right: 0.75rem;
+            font-weight: bold;
+        }
+
+        /* Membership Plans */
+        .plans-section {
+            padding: 6rem 2rem;
+            background: var(--isi-black);
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .plan-card {
+            background: var(--isi-dark);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(126, 211, 33, 0.3);
+        }
+
+        .plan-card.popular {
+            border: 2px solid var(--isi-green);
+        }
+
+        .plan-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--isi-green);
+            color: var(--isi-black);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .plan-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-subtitle {
+            color: var(--isi-light-gray);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .plan-features li::before {
+            content: '✓';
+            color: var(--isi-green);
+            font-weight: bold;
+        }
+
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+
+        .plan-cta {
+            color: var(--isi-green);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* Compare Section */
+        .compare-section {
+            padding: 4rem 2rem 6rem;
+            background: var(--isi-dark);
+        }
+
+        .compare-note {
+            text-align: center;
+            color: var(--isi-light-gray);
+            font-size: 0.95rem;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .compare-table {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--isi-gray);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .compare-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .compare-row:last-child {
+            border-bottom: none;
+        }
+
+        .compare-row.header {
+            background: var(--isi-dark);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .compare-cell {
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .compare-cell:first-child {
+            justify-content: flex-start;
+            color: var(--isi-light-gray);
+        }
+
+        .compare-row.header .compare-cell {
+            color: var(--isi-white);
+        }
+
+        .compare-check {
+            color: var(--isi-green);
+            font-size: 1.25rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, var(--isi-green) 0%, #5da01a 100%);
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--isi-black);
+            margin-bottom: 1rem;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            color: rgba(0,0,0,0.7);
+            margin-bottom: 2rem;
+        }
+
+        .cta-section .btn {
+            background: var(--isi-black);
+            color: var(--isi-white);
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 2rem 2rem;
+            background: var(--isi-black);
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            color: var(--isi-light-gray);
+            font-size: 0.9rem;
+            max-width: 300px;
+        }
+
+        .footer-column h4 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            color: var(--isi-light-gray);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-column a {
+            color: var(--isi-white);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .footer-column a:hover {
+            color: var(--isi-green);
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--isi-light-gray);
+        }
+
+        .footer-motto {
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .footer-motto span {
+            color: var(--isi-green);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .plans-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .compare-table {
+                overflow-x: auto;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .intro-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="/" class="logo"><span>ISI<sup>®</sup></span> ELITE TRAINING</a>
+            <ul class="nav-links">
+                <li><a href="/first-timers.html">FIRST TIMERS</a></li>
+                <li><a href="/mockup.html#workout">THE WORKOUT</a></li>
+                <li><a href="/membership.html">MEMBERSHIP</a></li>
+                <li><a href="/mockup.html#locations">LOCATIONS</a></li>
+            </ul>
+            <div class="nav-cta">
+                <a href="/first-timers.html" class="btn btn-primary">FREE SESSION</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>Choose Your <span>Membership</span></h1>
+        <p>Flexible plans designed to fit your lifestyle and help you reach your fitness goals.</p>
+    </section>
+
+    <!-- Intro Offers -->
+    <section class="intro-section">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-eyebrow">Start Your Journey</div>
+                <h2 class="section-title">New Member Offers</h2>
+            </div>
+            <div class="intro-grid">
+                <div class="intro-card">
+                    <div class="intro-title">Free Session</div>
+                    <div class="intro-subtitle">Experience ISI risk-free</div>
+                    <div class="intro-price">$0</div>
+                    <div class="intro-price-note">No credit card required</div>
+                    <ul class="intro-features">
+                        <li>Full 50-minute session</li>
+                        <li>Coach-led team training</li>
+                        <li>All equipment provided</li>
+                        <li>Facility tour included</li>
+                    </ul>
+                    <a href="/first-timers.html" class="btn btn-primary" style="width: 100%;">BOOK NOW</a>
+                </div>
+                <div class="intro-card featured">
+                    <div class="intro-badge">Best Value</div>
+                    <div class="intro-title">4-Week Intro</div>
+                    <div class="intro-subtitle">Our most popular starter package</div>
+                    <div class="intro-price">$89</div>
+                    <div class="intro-price-note">Unlimited sessions for 4 weeks</div>
+                    <ul class="intro-features">
+                        <li>Unlimited sessions</li>
+                        <li>Free InBody scan</li>
+                        <li>All session types included</li>
+                        <li>Goal setting with coach</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary" style="width: 100%;">GET STARTED</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership Plans -->
+    <section class="plans-section">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-eyebrow">Ongoing Memberships</div>
+                <h2 class="section-title">Find Your Perfect Plan</h2>
+            </div>
+            <div class="plans-grid">
+                <div class="plan-card">
+                    <div class="plan-icon">4️⃣</div>
+                    <h3 class="plan-title">4 Play</h3>
+                    <div class="plan-subtitle">4 sessions per week</div>
+                    <ul class="plan-features">
+                        <li>4 sessions per week</li>
+                        <li>All session types</li>
+                        <li>IronKidz access</li>
+                        <li>App booking</li>
+                        <li>InBody scans</li>
+                    </ul>
+                    <div class="plan-cta">Contact location for pricing</div>
+                </div>
+                <div class="plan-card popular">
+                    <div class="plan-badge">Most Popular</div>
+                    <div class="plan-icon">♾️</div>
+                    <h3 class="plan-title">Elite</h3>
+                    <div class="plan-subtitle">Unlimited sessions</div>
+                    <ul class="plan-features">
+                        <li>Unlimited sessions</li>
+                        <li>All session types</li>
+                        <li>IronKidz access</li>
+                        <li>Priority booking</li>
+                        <li>Monthly InBody scans</li>
+                    </ul>
+                    <div class="plan-cta">Contact location for pricing</div>
+                </div>
+                <div class="plan-card">
+                    <div class="plan-icon">👑</div>
+                    <h3 class="plan-title">VIP Elite</h3>
+                    <div class="plan-subtitle">The ultimate experience</div>
+                    <ul class="plan-features">
+                        <li>Unlimited sessions</li>
+                        <li>All locations access</li>
+                        <li>Guest passes included</li>
+                        <li>Priority everything</li>
+                        <li>Exclusive VIP perks</li>
+                    </ul>
+                    <div class="plan-cta">Contact location for pricing</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Compare -->
+    <section class="compare-section">
+        <div class="section-container">
+            <div class="section-header">
+                <div class="section-eyebrow">Compare</div>
+                <h2 class="section-title">What's Included</h2>
+            </div>
+            <p class="compare-note">All memberships include access to coach-led sessions, the ISI app, and our supportive community.</p>
+            <div class="compare-table">
+                <div class="compare-row header">
+                    <div class="compare-cell">Feature</div>
+                    <div class="compare-cell">4 Play</div>
+                    <div class="compare-cell">Elite</div>
+                    <div class="compare-cell">VIP Elite</div>
+                </div>
+                <div class="compare-row">
+                    <div class="compare-cell">Sessions per week</div>
+                    <div class="compare-cell">4</div>
+                    <div class="compare-cell">Unlimited</div>
+                    <div class="compare-cell">Unlimited</div>
+                </div>
+                <div class="compare-row">
+                    <div class="compare-cell">IronKidz Access</div>
+                    <div class="compare-cell"><span class="compare-check">✓</span></div>
+                    <div class="compare-cell"><span class="compare-check">✓</span></div>
+                    <div class="compare-cell"><span class="compare-check">✓</span></div>
+                </div>
+                <div class="compare-row">
+                    <div class="compare-cell">InBody Scans</div>
+                    <div class="compare-cell"><span class="compare-check">✓</span></div>
+                    <div class="compare-cell"><span class="compare-check">✓</span></div>
+                    <div class="compare-cell"><span class="compare-check">✓</span></div>
+                </div>
+                <div class="compare-row">
+                    <div class="compare-cell">Priority Booking</div>
+                    <div class="compare-cell">—</div>
+                    <div class="compare-cell"><span class="compare-check">✓</span></div>
+                    <div class="compare-cell"><span class="compare-check">✓</span></div>
+                </div>
+                <div class="compare-row">
+                    <div class="compare-cell">All Locations Access</div>
+                    <div class="compare-cell">—</div>
+                    <div class="compare-cell">—</div>
+                    <div class="compare-cell"><span class="compare-check">✓</span></div>
+                </div>
+                <div class="compare-row">
+                    <div class="compare-cell">Guest Passes</div>
+                    <div class="compare-cell">—</div>
+                    <div class="compare-cell">—</div>
+                    <div class="compare-cell"><span class="compare-check">✓</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="section-container">
+            <h2>Ready to Get Started?</h2>
+            <p>Try your first session FREE. No commitment, no pressure.</p>
+            <a href="/first-timers.html" class="btn btn-primary btn-large">BOOK FREE SESSION</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo"><span>ISI<sup>®</sup></span> ELITE TRAINING</div>
+                    <p>Athletic-based team training designed for all fitness levels. Iron sharpens iron.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Training</h4>
+                    <ul>
+                        <li><a href="/first-timers.html">First Timers</a></li>
+                        <li><a href="/mockup.html#workout">The Workout</a></li>
+                        <li><a href="#">HYROX Training</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Membership</h4>
+                    <ul>
+                        <li><a href="/membership.html">Pricing</a></li>
+                        <li><a href="#">Book a Session</a></li>
+                        <li><a href="#">Gift Cards</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Own an ISI</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Connect</h4>
+                    <ul>
+                        <li><a href="https://instagram.com/isielitetraining" target="_blank">Instagram</a></li>
+                        <li><a href="https://facebook.com/isielitetraining" target="_blank">Facebook</a></li>
+                        <li><a href="https://youtube.com/isielitetraining" target="_blank">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div>&copy; 2025 ISI Elite Training. All rights reserved.</div>
+                <div class="footer-motto">IRON <span>STRENGTHENS</span> IRON</div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
