@@ -2227,5 +2227,636 @@
             });
         });
     </script>
+
+    <!-- ISI AI Chat Assistant Styles -->
+    <style>
+        /* Chat Widget Container */
+        .isi-chat-widget {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            z-index: 9999;
+            font-family: var(--font-primary);
+        }
+
+        /* Chat Toggle Button */
+        .chat-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--isi-red), var(--isi-red-dark));
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(214, 40, 40, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .chat-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(214, 40, 40, 0.5);
+        }
+
+        .chat-toggle svg {
+            width: 28px;
+            height: 28px;
+            fill: white;
+        }
+
+        .chat-toggle .close-icon {
+            display: none;
+        }
+
+        .chat-toggle.active .chat-icon {
+            display: none;
+        }
+
+        .chat-toggle.active .close-icon {
+            display: block;
+        }
+
+        /* Chat Window */
+        .chat-window {
+            position: absolute;
+            bottom: 75px;
+            right: 0;
+            width: 380px;
+            max-width: calc(100vw - 40px);
+            height: 520px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-window.active {
+            display: flex;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Chat Header */
+        .chat-header {
+            background: linear-gradient(135deg, var(--isi-red), var(--isi-red-dark));
+            color: white;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .chat-header-info h4 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .chat-header-info span {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .chat-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .chat-status::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #4CAF50;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Chat Messages */
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: #f8f9fa;
+        }
+
+        .chat-message {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .chat-message.bot {
+            background: white;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-message.user {
+            background: var(--isi-red);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-message.typing {
+            display: flex;
+            gap: 4px;
+            padding: 16px 20px;
+        }
+
+        .chat-message.typing span {
+            width: 8px;
+            height: 8px;
+            background: #999;
+            border-radius: 50%;
+            animation: typingDot 1.4s infinite;
+        }
+
+        .chat-message.typing span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .chat-message.typing span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingDot {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-5px); }
+        }
+
+        /* Chat Input */
+        .chat-input-container {
+            padding: 12px 16px;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 24px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .chat-input:focus {
+            border-color: var(--isi-red);
+        }
+
+        .chat-send {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--isi-red);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .chat-send:hover {
+            background: var(--isi-red-dark);
+        }
+
+        .chat-send:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .chat-send svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        /* Quick Actions */
+        .chat-quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 8px 16px;
+            background: white;
+            border-top: 1px solid #eee;
+        }
+
+        .quick-action-btn {
+            padding: 6px 12px;
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 16px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quick-action-btn:hover {
+            background: var(--isi-red);
+            color: white;
+            border-color: var(--isi-red);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            .isi-chat-widget {
+                bottom: 80px;
+                right: 10px;
+            }
+
+            .chat-window {
+                width: calc(100vw - 20px);
+                height: 70vh;
+                right: -5px;
+            }
+        }
+    </style>
+
+    <!-- ISI AI Chat Widget HTML -->
+    <div class="isi-chat-widget" id="isiChatWidget">
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <div class="chat-avatar">ISI</div>
+                <div class="chat-header-info">
+                    <h4>ISI Assistant</h4>
+                    <span class="chat-status">Online 24/7</span>
+                </div>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <!-- Messages will be added here -->
+            </div>
+            <div class="chat-quick-actions" id="quickActions">
+                <button class="quick-action-btn" data-question="What's included in my first free session?">First Session</button>
+                <button class="quick-action-btn" data-question="What's today's workout focus?">Today's Workout</button>
+                <button class="quick-action-btn" data-question="Tell me about membership options">Memberships</button>
+                <button class="quick-action-btn" data-question="Do you sell supplements?">Supplements</button>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Ask me anything about ISI..." autocomplete="off">
+                <button class="chat-send" id="chatSend">
+                    <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                </button>
+            </div>
+        </div>
+        <button class="chat-toggle" id="chatToggle" aria-label="Open chat assistant">
+            <svg class="chat-icon" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+            <svg class="close-icon" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+    </div>
+
+    <!-- ISI AI Chat JavaScript -->
+    <script>
+    (function() {
+        'use strict';
+
+        // ISI Knowledge Base - Customer-focused information
+        const ISI_KNOWLEDGE = {
+            workoutCalendar: {
+                monday: "Lower-body focus",
+                tuesday: "Upper-body focus",
+                wednesday: "Core/cardio focus",
+                thursday: "Lower-body focus",
+                friday: "Upper-body focus",
+                saturday: "Core/cardio focus",
+                sunday: "Total body workout"
+            },
+            products: {
+                protein: "Premium protein powder for muscle recovery and growth",
+                preworkout: "Energy-boosting pre-workout formula to maximize your session",
+                creatine: "Pure creatine monohydrate for strength and power"
+            },
+            brand: "Human Nutrition",
+            sessionDetails: {
+                duration: "50 minutes",
+                format: "Coach-led team training",
+                burns: "Up to 1,000 calories",
+                levels: "All fitness levels welcome"
+            },
+            terminology: {
+                gym: "Facility",
+                trainer: "Coach",
+                class: "Session",
+                exercise: "Movement"
+            }
+        };
+
+        // System prompt for OpenAI
+        const SYSTEM_PROMPT = `You are the ISI Elite Training AI Assistant - a friendly, knowledgeable, and motivating customer service representative available 24/7. Your role is to help potential and current members with questions about ISI Elite Training.
+
+ABOUT ISI ELITE TRAINING:
+- Athletic-based 50-minute team training sessions
+- Coach-led (not trainer-led) group workouts
+- Facilities (not gyms) across 60+ locations nationwide
+- All fitness levels welcome - movements are scalable
+- First session is always FREE
+
+WEEKLY WORKOUT CALENDAR:
+- Monday & Thursday: Lower-body focus
+- Tuesday & Friday: Upper-body focus
+- Wednesday & Saturday: Core/cardio focus
+- Sunday: Total body workout
+Note: Check the local Facility calendar for special events and themed workouts.
+
+ISI PRODUCTS (Human Nutrition Brand):
+ISI Facilities sell premium supplements to support your fitness journey:
+- Protein powder - for muscle recovery and growth
+- Pre-workout - energy formula to maximize your session
+- Creatine - pure monohydrate for strength and power
+Always mention that ISI sells these products as part of anyone's health and fitness journey.
+
+SEASONAL APPAREL:
+ISI locations sell seasonal apparel - great for representing your Facility!
+
+KEY TERMINOLOGY (ISI Brand Language):
+- Say "Facility" not gym or studio
+- Say "Coach" not trainer
+- Say "Session" not class
+- Say "Movement" not exercise
+- Youth program is called "IronKidz"
+
+MEMBERSHIP OPTIONS:
+- Free First Session: $0 - Try us risk-free
+- 4-Week Intro: $89 - Perfect for beginners (unlimited sessions)
+- 4 Play: 4 sessions/week
+- Elite: Unlimited sessions
+- VIP Elite: Unlimited + premium perks
+
+YOUR PERSONALITY:
+- Enthusiastic but not pushy
+- Knowledgeable and helpful
+- Motivating and encouraging
+- Always suggest booking a free session when appropriate
+- Keep responses concise (2-3 sentences max unless asked for details)
+
+IMPORTANT: Always recommend checking the local Facility's calendar for special events, holiday hours, and themed workouts.`;
+
+        // Chat state
+        let isOpen = false;
+        let isTyping = false;
+        let conversationHistory = [];
+
+        // DOM Elements
+        const widget = document.getElementById('isiChatWidget');
+        const toggle = document.getElementById('chatToggle');
+        const window = document.getElementById('chatWindow');
+        const messages = document.getElementById('chatMessages');
+        const input = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('chatSend');
+        const quickActions = document.getElementById('quickActions');
+
+        // Initialize chat
+        function initChat() {
+            // Welcome message
+            addMessage("Hi there! I'm your ISI Elite Training assistant, here 24/7 to help. Whether you're curious about our 50-minute team Sessions, membership options, or want to book your FREE first visit - I've got you covered! What can I help you with today?", 'bot');
+
+            // Event listeners
+            toggle.addEventListener('click', toggleChat);
+            sendBtn.addEventListener('click', sendMessage);
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+
+            // Quick action buttons
+            quickActions.querySelectorAll('.quick-action-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const question = btn.dataset.question;
+                    input.value = question;
+                    sendMessage();
+                });
+            });
+        }
+
+        // Toggle chat window
+        function toggleChat() {
+            isOpen = !isOpen;
+            toggle.classList.toggle('active', isOpen);
+            window.classList.toggle('active', isOpen);
+            if (isOpen) {
+                input.focus();
+            }
+        }
+
+        // Add message to chat
+        function addMessage(text, type) {
+            const messageEl = document.createElement('div');
+            messageEl.className = `chat-message ${type}`;
+            messageEl.textContent = text;
+            messages.appendChild(messageEl);
+            messages.scrollTop = messages.scrollHeight;
+            return messageEl;
+        }
+
+        // Show typing indicator
+        function showTyping() {
+            const typingEl = document.createElement('div');
+            typingEl.className = 'chat-message bot typing';
+            typingEl.id = 'typingIndicator';
+            typingEl.innerHTML = '<span></span><span></span><span></span>';
+            messages.appendChild(typingEl);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        // Remove typing indicator
+        function hideTyping() {
+            const typingEl = document.getElementById('typingIndicator');
+            if (typingEl) typingEl.remove();
+        }
+
+        // Get today's workout
+        function getTodaysWorkout() {
+            const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+            const today = days[new Date().getDay()];
+            return ISI_KNOWLEDGE.workoutCalendar[today];
+        }
+
+        // Send message and get AI response
+        async function sendMessage() {
+            const userMessage = input.value.trim();
+            if (!userMessage || isTyping) return;
+
+            // Add user message
+            addMessage(userMessage, 'user');
+            input.value = '';
+
+            // Add to conversation history
+            conversationHistory.push({ role: 'user', content: userMessage });
+
+            // Show typing
+            isTyping = true;
+            sendBtn.disabled = true;
+            showTyping();
+
+            try {
+                // Call OpenAI API
+                const response = await callOpenAI(userMessage);
+                hideTyping();
+                addMessage(response, 'bot');
+                conversationHistory.push({ role: 'assistant', content: response });
+            } catch (error) {
+                hideTyping();
+                // Fallback response if API fails
+                const fallbackResponse = getFallbackResponse(userMessage);
+                addMessage(fallbackResponse, 'bot');
+            }
+
+            isTyping = false;
+            sendBtn.disabled = false;
+        }
+
+        // Call OpenAI API
+        async function callOpenAI(userMessage) {
+            // Note: In production, this should go through a backend proxy
+            // to keep the API key secure. For demo purposes, using a fallback.
+
+            // Check if API key is configured (would be set in production)
+            const apiKey = window.ISI_OPENAI_KEY || null;
+
+            if (!apiKey) {
+                // Use intelligent fallback
+                return getFallbackResponse(userMessage);
+            }
+
+            const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                },
+                body: JSON.stringify({
+                    model: 'gpt-4o-mini',
+                    messages: [
+                        { role: 'system', content: SYSTEM_PROMPT },
+                        ...conversationHistory.slice(-10) // Keep last 10 messages for context
+                    ],
+                    max_tokens: 200,
+                    temperature: 0.7
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('API call failed');
+            }
+
+            const data = await response.json();
+            return data.choices[0].message.content;
+        }
+
+        // Intelligent fallback responses when API is unavailable
+        function getFallbackResponse(message) {
+            const lowerMessage = message.toLowerCase();
+
+            // Today's workout
+            if (lowerMessage.includes('today') && (lowerMessage.includes('workout') || lowerMessage.includes('focus'))) {
+                const workout = getTodaysWorkout();
+                return `Today's focus is ${workout}! It's going to be an amazing Session. Our Coaches design each workout to challenge you while keeping movements scalable for all fitness levels. Ready to crush it?`;
+            }
+
+            // Weekly schedule
+            if (lowerMessage.includes('schedule') || lowerMessage.includes('calendar') || lowerMessage.includes('week')) {
+                return "Here's our weekly Session focus:\n• Mon & Thu: Lower-body\n• Tue & Fri: Upper-body\n• Wed & Sat: Core/cardio\n• Sun: Total body\n\nCheck your local Facility calendar for special events and themed workouts!";
+            }
+
+            // First session / free trial
+            if (lowerMessage.includes('first') || lowerMessage.includes('free') || lowerMessage.includes('trial')) {
+                return "Your first Session is completely FREE! Just show up 10 minutes early, wear athletic clothes, and bring water. Our Coaches will guide you through everything - no experience needed. All movements are scalable to your fitness level. Ready to book?";
+            }
+
+            // Membership / pricing
+            if (lowerMessage.includes('membership') || lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('plan')) {
+                return "We have flexible options! Start with a FREE first Session, then try our 4-Week Intro for just $89 (unlimited Sessions). For ongoing memberships: 4 Play (4/week), Elite (unlimited), or VIP Elite (unlimited + perks). Want details on any specific plan?";
+            }
+
+            // Supplements / products
+            if (lowerMessage.includes('supplement') || lowerMessage.includes('protein') || lowerMessage.includes('pre-workout') || lowerMessage.includes('creatine') || lowerMessage.includes('nutrition')) {
+                return "Great question! Our Facilities carry Human Nutrition brand supplements to support your fitness journey - premium protein powder for recovery, energizing pre-workout formula, and pure creatine for strength. Ask your Coach about what might work best for your goals!";
+            }
+
+            // Apparel
+            if (lowerMessage.includes('apparel') || lowerMessage.includes('shirt') || lowerMessage.includes('clothes') || lowerMessage.includes('merch')) {
+                return "Yes! ISI Facilities carry seasonal apparel so you can rep your home Facility in style. Stop by and check out what's in stock - new designs drop seasonally!";
+            }
+
+            // Locations
+            if (lowerMessage.includes('location') || lowerMessage.includes('near me') || lowerMessage.includes('where')) {
+                return "We have 60+ Facilities nationwide! Check our Locations page to find the one nearest you. Each Facility has its own schedule and special events, so be sure to check the local calendar.";
+            }
+
+            // Kids / IronKidz
+            if (lowerMessage.includes('kid') || lowerMessage.includes('child') || lowerMessage.includes('youth') || lowerMessage.includes('ironkidz')) {
+                return "We love seeing families train together! Our IronKidz program brings the ISI experience to younger athletes in a fun, age-appropriate way. Check with your local Facility for IronKidz schedules and age requirements!";
+            }
+
+            // What is ISI / about
+            if (lowerMessage.includes('what is isi') || lowerMessage.includes('about') || lowerMessage.includes('who are')) {
+                return "ISI Elite Training delivers 50-minute Coach-led team Sessions that can burn up to 1,000 calories! We're all about athletic-based training that's challenging yet scalable for every fitness level. It's team energy, expert coaching, and real results. Come try your first Session FREE!";
+            }
+
+            // How long / duration
+            if (lowerMessage.includes('how long') || lowerMessage.includes('duration') || lowerMessage.includes('minutes')) {
+                return "Each Session is exactly 50 minutes - the perfect amount of time to get an incredible workout without taking over your day. Our Coaches keep the energy high from warm-up to cool-down!";
+            }
+
+            // Book / sign up
+            if (lowerMessage.includes('book') || lowerMessage.includes('sign up') || lowerMessage.includes('register') || lowerMessage.includes('schedule')) {
+                return "Ready to get started? Click any 'Book Free Session' button on our site, or visit your nearest Facility's page to see the schedule and reserve your spot. Your first Session is on us!";
+            }
+
+            // Default response
+            return "Great question! I'd love to help you learn more about ISI Elite Training. We offer 50-minute Coach-led team Sessions that challenge and motivate you to reach your goals. Plus, our Facilities carry Human Nutrition supplements and seasonal apparel! What would you like to know more about - our Sessions, memberships, or products?";
+        }
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initChat);
+        } else {
+            initChat();
+        }
+    })();
+    </script>
 </body>
 </html>
