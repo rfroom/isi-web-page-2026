@@ -899,6 +899,60 @@
             color: var(--isi-light-gray);
         }
 
+        /* Location Results */
+        .location-results {
+            max-width: 800px;
+            margin: 2rem auto 0;
+            text-align: left;
+        }
+
+        .location-result-card {
+            background: var(--isi-dark);
+            border: 1px solid rgba(126, 211, 33, 0.3);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .location-result-card:hover {
+            border-color: var(--isi-green);
+            transform: translateY(-2px);
+        }
+
+        .location-info h3 {
+            color: var(--isi-white);
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .location-info p {
+            color: var(--isi-light-gray);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .location-distance {
+            color: var(--isi-green);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .location-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .no-results {
+            text-align: center;
+            color: var(--isi-light-gray);
+            padding: 2rem;
+        }
+
         /* CTA Section */
         .final-cta {
             padding: 8rem 2rem;
@@ -1261,7 +1315,7 @@
     <header>
         <nav aria-label="Main navigation" role="navigation">
             <div class="nav-container">
-                <a href="/" class="logo" aria-label="ISI Elite Training - Home"><span>ISI<sup>®</sup></span> ELITE TRAINING</a>
+                <a href="/mockup.html" class="logo" aria-label="ISI Elite Training - Home"><span>ISI<sup>®</sup></span> ELITE TRAINING</a>
                 <ul class="nav-links" role="menubar">
                     <li role="none"><a href="/first-timers.html" role="menuitem">FIRST TIMERS</a></li>
                     <li role="none"><a href="#workout" role="menuitem">THE WORKOUT</a></li>
@@ -1486,12 +1540,17 @@
             <span class="section-eyebrow">Find Your Facility</span>
             <h2 id="locations-heading" class="section-title">60+ Locations Nationwide</h2>
             <p style="color: var(--isi-light-gray); margin-top: 1rem;">Enter your zip code to find the ISI Elite Training nearest you.</p>
-            <form class="location-search" role="search" aria-label="Find a location">
+            <form class="location-search" role="search" aria-label="Find a location" id="locationSearchForm">
                 <label for="zip-code" class="visually-hidden">Enter your zip code</label>
-                <input type="text" id="zip-code" name="zipcode" class="location-input" placeholder="Enter your zip code..." pattern="[0-9]{5}" inputmode="numeric" autocomplete="postal-code" aria-describedby="zip-help">
+                <input type="text" id="zip-code" name="zipcode" class="location-input" placeholder="Enter your zip code or city..." autocomplete="postal-code" aria-describedby="zip-help">
                 <button type="submit" class="btn btn-primary">FIND LOCATION</button>
             </form>
-            <span id="zip-help" class="visually-hidden">Enter a 5-digit US zip code</span>
+            <span id="zip-help" class="visually-hidden">Enter a 5-digit US zip code or city name</span>
+
+            <!-- Location Search Results -->
+            <div id="locationResults" class="location-results" style="display: none;">
+                <!-- Results will be populated by JavaScript -->
+            </div>
         </div>
     </section>
 
@@ -1991,6 +2050,97 @@
             setInterval(showSocialProof, 30000 + Math.random() * 15000);
         }, 8000);
 
+        // === Location Search ===
+        const ISI_LOCATIONS = [
+            {
+                name: 'ISI Elite Training - Apex',
+                address: '1025 Investment Blvd, Suite 130, Apex, NC 27502',
+                phone: '(919) 355-5150',
+                url: '/locations/apex-nc.html',
+                zipCodes: ['27502', '27503', '27511', '27513', '27518', '27519', '27523', '27526', '27529', '27539', '27540', '27560', '27562', '27571', '27587', '27591', '27596', '27597'],
+                cities: ['apex', 'cary', 'raleigh', 'holly springs', 'fuquay', 'fuquay-varina', 'morrisville', 'wake forest']
+            },
+            {
+                name: 'ISI Elite Training - Austin',
+                address: '1234 Fitness Way, Austin, TX 78701',
+                phone: '(512) 555-0100',
+                url: '#',
+                zipCodes: ['78701', '78702', '78703', '78704', '78705', '78721', '78722', '78723', '78724', '78725', '78726', '78727', '78728', '78729', '78730', '78731', '78732', '78733', '78734', '78735', '78736', '78737', '78738', '78739', '78741', '78742', '78744', '78745', '78746', '78747', '78748', '78749', '78750', '78751', '78752', '78753', '78754', '78756', '78757', '78758', '78759'],
+                cities: ['austin', 'round rock', 'cedar park', 'pflugerville', 'lakeway']
+            },
+            {
+                name: 'ISI Elite Training - Dallas',
+                address: '5678 Training Dr, Dallas, TX 75201',
+                phone: '(214) 555-0200',
+                url: '#',
+                zipCodes: ['75201', '75202', '75203', '75204', '75205', '75206', '75207', '75208', '75209', '75210', '75211', '75212', '75214', '75215', '75216', '75217', '75218', '75219', '75220', '75223', '75224', '75225', '75226', '75227', '75228', '75229', '75230', '75231', '75232', '75233', '75234', '75235', '75236', '75237', '75238', '75240', '75241', '75242', '75243', '75244', '75246', '75247', '75248', '75249', '75250', '75251', '75252', '75253', '75254'],
+                cities: ['dallas', 'plano', 'richardson', 'irving', 'garland', 'mesquite', 'frisco']
+            }
+        ];
+
+        function searchLocations(query) {
+            const q = query.toLowerCase().trim();
+            const results = [];
+
+            ISI_LOCATIONS.forEach(location => {
+                // Check zip codes
+                if (location.zipCodes.includes(q)) {
+                    results.push({ ...location, matchType: 'zip' });
+                    return;
+                }
+                // Check city names
+                if (location.cities.some(city => city.includes(q) || q.includes(city))) {
+                    results.push({ ...location, matchType: 'city' });
+                    return;
+                }
+                // Check location name
+                if (location.name.toLowerCase().includes(q)) {
+                    results.push({ ...location, matchType: 'name' });
+                }
+            });
+
+            return results;
+        }
+
+        function displayLocationResults(results) {
+            const resultsContainer = document.getElementById('locationResults');
+
+            if (results.length === 0) {
+                resultsContainer.innerHTML = `
+                    <div class="no-results">
+                        <p>No locations found matching your search.</p>
+                        <p>Try entering a different zip code or city name, or <a href="#" onclick="openBooking()" style="color: var(--isi-green);">contact us</a> to find a Facility near you.</p>
+                    </div>
+                `;
+            } else {
+                resultsContainer.innerHTML = results.map(location => `
+                    <div class="location-result-card">
+                        <div class="location-info">
+                            <h3>${location.name}</h3>
+                            <p>${location.address}</p>
+                            <p>${location.phone}</p>
+                            <p class="location-distance">Matched by ${location.matchType}</p>
+                        </div>
+                        <div class="location-actions">
+                            <a href="${location.url}" class="btn btn-secondary">View Details</a>
+                            <a href="#" onclick="openBooking()" class="btn btn-primary">Book Session</a>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            resultsContainer.style.display = 'block';
+        }
+
+        document.getElementById('locationSearchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const query = document.getElementById('zip-code').value;
+            if (query.trim()) {
+                const results = searchLocations(query);
+                displayLocationResults(results);
+            }
+        });
+
         // === Keyboard Navigation ===
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
@@ -2434,9 +2584,9 @@ KEY TERMINOLOGY (ISI Brand Language):
 MEMBERSHIP OPTIONS:
 - Free First Session: $0 - Try us risk-free
 - 4-Week Intro: $89 - Perfect for beginners (unlimited sessions)
-- 4 Play: 4 sessions/week
-- Elite: Unlimited sessions
-- VIP Elite: Unlimited + premium perks
+- 4 Play: 4 sessions/month
+- Elite: 8 sessions/month
+- VIP Elite: Unlimited sessions + premium perks
 
 YOUR PERSONALITY:
 - Enthusiastic but not pushy
@@ -2634,7 +2784,7 @@ Respond as the ISI Assistant:`;
 
             // Membership / pricing
             if (lowerMessage.includes('membership') || lowerMessage.includes('price') || lowerMessage.includes('cost') || lowerMessage.includes('plan')) {
-                return "We have flexible options! Start with a FREE first Session, then try our 4-Week Intro for just $89 (unlimited Sessions). For ongoing memberships: 4 Play (4/week), Elite (unlimited), or VIP Elite (unlimited + perks). Want details on any specific plan?";
+                return "We have flexible options! Start with a FREE first Session, then try our 4-Week Intro for just $89 (unlimited Sessions). For ongoing memberships: 4 Play (4/month), Elite (8/month), or VIP Elite (unlimited + perks). Want details on any specific plan?";
             }
 
             // Supplements / products
